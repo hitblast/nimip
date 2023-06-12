@@ -112,10 +112,10 @@ proc retrieveData(self: IPRef, key: string): JsonNode =
 ]#
 
 
-proc country*(self: IPRef): string =  ## The country in which the given IP address originates.
+proc country*(self: IPRef): string =  ## The country from which the given IP address originates.
     return self.retrieveData("country").getStr()
 
-proc countryCode*(self: IPRef): string =  ## The country code of the country in which the IP address originates.
+proc countryCode*(self: IPRef): string =  ## The country code of the country from which the IP address originates.
     return self.retrieveData("countryCode").getStr()
 
 proc region*(self: IPRef): string =  ## The region of the IP address.
