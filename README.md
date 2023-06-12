@@ -117,4 +117,4 @@ The various third-party libraries and dependancies used for developing this proj
 
 ## 🔖 License
 
-This project is licensed under the [MIT License](https://github.com/nimip/mcsrvstat.nim/blob/main/LICENSE).
+This project is licensed under the [MIT License](https://github.com/hitblast/nimip/blob/main/LICENSE).
