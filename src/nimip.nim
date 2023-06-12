@@ -102,12 +102,12 @@ proc run*(): Future[void] {.async.} =
     tb.write(2, 5,  "Timezone    : ", ip.timezone)
     tb.write(2, 6,  "Location    : ", addressStr)
     tb.write(2, 9,  "Provider    : ", ip.isp)
-    tb.write(16, 10, fmt"({ip.orgAs})")
+    tb.write(16, 10, fmt"[{ip.orgAs}]")
     tb.write(2, 12, "Zip Code    : ", ip.zip)
 
     tb.drawHorizLine(2, primaryLength - 2, 13)
-    tb.write(2, 15, "Latitude  : ", fgCyan, fmt"{ip.latitude}", fgWhite)
-    tb.write(2, 16, "Longitude : ", fgCyan, fmt"{ip.longitude}", fgWhite)
+    tb.write(2, 15, "Latitude    : ", fgCyan, fmt"{ip.latitude}", fgWhite)
+    tb.write(2, 16, "Longitude   : ", fgCyan, fmt"{ip.longitude}", fgWhite)
 
 
     # Finally, display the entire thing.
