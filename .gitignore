@@ -1,0 +1,12 @@
+# Nim
+nimcache/
+nimblecache/
+htmldocs/
+
+# macOS
+.DS_Store
+
+# custom
+tests
+nimip
+*.exe
