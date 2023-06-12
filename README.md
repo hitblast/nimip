@@ -79,7 +79,7 @@ let ip = IPRef(
 # The main procedure.
 proc main() {.async.} =
 
-    # Checks if the IP address can be queried..
+    # Checks if the IP address can be queried.
     try:
         await ip.refreshData()
     except IPResponseError:
