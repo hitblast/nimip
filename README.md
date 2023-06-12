@@ -68,7 +68,7 @@ import std/[
     asyncdispatch,
     strformat
 ]
-import src/nimippkg/main
+import nimippkg/main
 
 # Creating a new IP reference object.
 let ip = IPRef(
