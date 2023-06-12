@@ -40,6 +40,16 @@ As a developer, I'm still learning the Nim programming language (pretty awesome!
 $ nimble install nimip
 ```
 
+- or, using [Homebrew](https://brew.sh):
+
+```bash
+# tapping the formula
+$ brew tap hitblast/nimtap
+
+# installing it
+$ brew install nimip
+```
+
 - or, you can manually download the packages required from the latest release in the [Releases](https://github.com/hitblast/nimip/releases) section. The [build artifacts](https://github.com/hitblast/nimip/actions/workflows/builds.yml) are also stored for you to download as well.
 
 <br>
