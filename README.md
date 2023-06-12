@@ -13,12 +13,21 @@
 
 ## Table of Contents
 
+- [Overview](#-overview)
 - [Installation](#-installation)
 - [Usage](#-usage)
     - [as a CLI application](#-as-a-cli-application)
     - [as a Nim library](#-as-a-nim-library)
 - [Building](#-building)
 - [License](#-license)
+
+<br>
+
+## 🔑 Overview
+
+This project, AKA nimip, is a hybrid and asynchronous wrapper around [ip-api](), a free geolocation API which can be used to lookup a domain or IP address. The user can provide an IPv4 / IPv6 compliant address and nimip can query for it with speed, whilst being a very tiny package. 
+
+As a developer, I'm still learning the Nim programming language (pretty awesome!) and nimip is one of my hobby projects which I had a lot of fun programming on. It has definitely helped me get in-depth with the language itself and hopefully, it'll be helpful to those who need to constantly access information on IP addresses.
 
 <br>
 
