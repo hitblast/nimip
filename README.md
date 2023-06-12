@@ -23,7 +23,7 @@
 
 <br>
 
-## 🔑 Overview
+## 📖 Overview
 
 This project, AKA nimip, is a hybrid and asynchronous wrapper around [ip-api](https://ip-api.com), a free geolocation API which can be used to lookup a domain or IP address. The user can provide an **IPv4 / IPv6** compliant address and nimip can query for it with speed, whilst being a very tiny package. 
 
