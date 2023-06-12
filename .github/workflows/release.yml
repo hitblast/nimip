@@ -1,0 +1,123 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        nimversion:
+          - binary:stable
+
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        include:
+          - os: ubuntu-latest
+            file: nimip
+            artifact: package-linux-x64
+
+          - os: macos-latest
+            file: nimip
+            artifact: package-darwin-x64
+
+          - os: windows-latest
+            file: nimip.exe
+            artifact: binary-win-x64
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Setup Nim
+      uses: iffy/install-nim@v4
+      with:
+        version: ${{ matrix.nimversion }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Check package validity
+      run: nimble check
+
+    - name: Build
+      run: nimble release
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ matrix.artifact }}
+        path: ${{ matrix.file }}
+
+
+  dll:
+    name: DLLs for Windows
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download DLLs
+        uses: wei/curl@master
+        with:
+          args: https://nim-lang.org/download/dlls.zip --output dlls.zip
+
+      - name: Unzip
+        uses: montudor/action-zip@v1
+        with:
+          args: unzip -qq dlls.zip
+
+      - name: Upload DLLs artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: dlls
+          path: |
+            cacert.pem
+            libcrypto-1_1.dll
+            libcrypto-1_1-x64.dll
+            sqlite3_32.dll
+            sqlite3_64.dll
+            libssl-1_1.dll
+            libssl-1_1-x64.dll
+
+
+  package-windows:
+    name: Package for Windows
+
+    runs-on: ubuntu-latest
+    needs: [build, dll]
+
+    steps:
+    - name: Download binary artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: binary-win-x64
+
+    - name: Download DLLs artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: dlls
+
+    - name: Compress
+      uses: montudor/action-zip@v1
+      with:
+        args: zip -qq -r package-win-x64.zip .
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: package-win-x64
+        path: package-win-x64.zip
+
+    - name: Purge unnecessary artifacts
+      uses: geekyeggo/delete-artifact@v2
+      with:
+        name: |
+          binary-win-x64
+          dlls
