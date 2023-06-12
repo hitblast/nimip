@@ -41,7 +41,7 @@ jobs:
         run: |
           nimble doc2 src/nimippkg/main.nim --accept
           cd src/nimippkg/htmldocs
-          mv base.html index.html
+          mv main.html index.html
         
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
