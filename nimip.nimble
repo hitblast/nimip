@@ -1,5 +1,5 @@
 # The package itself.
-version       = "1.0.0"
+version       = "1.1.0"
 author        = "HitBlast"
 description   = "Asynchronously lookup IP addresses with this tiny, hybrid Nim application."
 license       = "MIT"
