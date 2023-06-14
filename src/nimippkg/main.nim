@@ -104,7 +104,7 @@ proc retrieveData(self: IPRef, key: string): JsonNode =
     if not self.resp.isSome:
         raise NotInitializedError.newException("Initialize the IP information with IPRef.refreshData() first.")
     else:
-        return self.resp.get()[key]
+        return self.resp.get(){key}
 
 
 #[
