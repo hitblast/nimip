@@ -167,6 +167,6 @@ proc orgAs*(self: IPRef): string =
     return self.retrieveData("as").getStr()
 
 proc asName*(self: IPRef): string =
-    ## The AS name **(RIR)** of the IP address. 
+    ## The AS name **(RIR)** of the IP address.
     ## Empty for IP blocks not being announced in BGP tables.
     return self.retrieveData("asname").getStr()
