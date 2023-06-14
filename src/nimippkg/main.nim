@@ -35,9 +35,9 @@ import std/[
 
 
 # Different type declarations related to exceptions and reference objects.
-type 
+type
     IPRef* = ref object
-        ## An object representing an IP address. 
+        ## An object representing an IP address.
         ## This is the core object which can be used to interact with the application's base.
 
         address*: string
@@ -57,9 +57,9 @@ type
         ZH_CN = "zh-CN"
         RU = "ru"
 
-    IPResponseError* = object of HttpRequestError  ## Raised if the code can't communicate with the API due to unstable internet connection or other circumstances.
-    IPDefect* = object of IPResponseError  ## Raised if the provided IP is defected or invalid.
-    NotInitializedError* = object of KeyError  ## Raised if the developer has not initialized the data inside the `IPRef` object with `IPRef.refreshData()`.
+    IPResponseError* = object of HttpRequestError ## Raised if the code can't communicate with the API due to unstable internet connection or other circumstances.
+    IPDefect* = object of IPResponseError ## Raised if the provided IP is defected or invalid.
+    NotInitializedError* = object of KeyError ## Raised if the developer has not initialized the data inside the `IPRef` object with `IPRef.refreshData()`.
 
 
 #[
@@ -75,19 +75,20 @@ proc refreshData*(self: IPRef): Future[void] {.async.} =
     var resp: JsonNode
 
     # Constants related to the HTTP client and the locale for the query.
-    let 
+    let
         client = newAsyncHttpClient()
         locale = if self.locale is void: Locale.EN else: self.locale
-    
+
     # A try-except block has been used to ensure stable internet connection before execution.
     try:
-        resp = parseJson(await client.getContent(fmt"http://ip-api.com/json/{self.address}?lang={locale}"))
+        resp = parseJson(await client.getContent(
+                fmt"http://ip-api.com/json/{self.address}?lang={locale}?fields=status,message,country,countryCode,region,regionName,city,zip,lat,lon,timezone,offset,isp,org,as,asname,query"))
     except OSError:
         raise IPResponseError.newException("A stable internet connection is required for IP lookups.")
 
     # This if-else block checks if the requested IP address returns a failed query.
     if resp["status"].getStr() == "fail":
-        let 
+        let
             message = resp["message"].getStr()
             query = resp["query"].getStr()
 
@@ -112,38 +113,51 @@ proc retrieveData(self: IPRef, key: string): JsonNode =
 ]#
 
 
-proc country*(self: IPRef): string =  ## The country from which the given IP address originates.
+proc country*(self: IPRef): string =
+    ## The country from which the given IP address originates.
     return self.retrieveData("country").getStr()
 
-proc countryCode*(self: IPRef): string =  ## The country code of the country from which the IP address originates.
+proc countryCode*(self: IPRef): string =
+    ## The country code of the IP address.
     return self.retrieveData("countryCode").getStr()
 
-proc region*(self: IPRef): string =  ## The region of the IP address.
+proc region*(self: IPRef): string =
+    ## The region of the IP address.
     return self.retrieveData("region").getStr()
 
-proc regionName*(self: IPRef): string =  ## The name of the region of the IP address.
+proc regionName*(self: IPRef): string =
+    ## The name of the region of the IP address.
     return self.retrieveData("regionName").getStr()
 
-proc city*(self: IPRef): string =  ## The city in which the IP address is located.
+proc city*(self: IPRef): string =
+    ## The city in which the IP address is located.
     return self.retrieveData("city").getStr()
 
-proc zip*(self: IPRef): string =  ## The ZIP code of the area in which the IP address is located.
+proc zip*(self: IPRef): string =
+    ## The ZIP code of the IP address.
     return self.retrieveData("zip").getStr()
 
-proc latitude*(self: IPRef): float =  ## The coordinates (latitude) of the IP address.
+proc latitude*(self: IPRef): float =
+    ## The coordinates (latitude) of the IP address.
     return self.retrieveData("lat").getFloat()
 
-proc longitude*(self: IPRef): float =  ## The coordinates (longitude) of the IP address.
+proc longitude*(self: IPRef): float =
+    ## The coordinates (longitude) of the IP address.
     return self.retrieveData("lon").getFloat()
 
-proc timezone*(self: IPRef): string =  ## The timezone of the area in which the IP address is located.
+proc timezone*(self: IPRef): string =
+    ## The timezone of the area in which the IP address is located.
     return self.retrieveData("timezone").getStr()
 
-proc isp*(self: IPRef): string =  ## The Internet Service Provider (ISP) of the IP address.
+proc isp*(self: IPRef): string =
+    ## The Internet Service Provider (ISP) of the IP address.
     return self.retrieveData("isp").getStr()
 
-proc org*(self: IPRef): string =  ## The organization handling the IP address.
+proc org*(self: IPRef): string =
+    ## The organization handling the IP address.
     return self.retrieveData("org").getStr()
 
-proc orgAs*(self: IPRef): string =  ## The organization (detailed) handling the IP address.
+proc orgAs*(self: IPRef): string =
+    ## The AS number and organization related to the IP address.
+    ## Empty for IP blocks not being announced in BGP tables.
     return self.retrieveData("as").getStr()
