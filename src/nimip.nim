@@ -99,7 +99,7 @@ proc run*(): Future[void] {.async.} =
 
     # Display IP information onto terminal.
     tb.write(2, 4,  "Address     : ", fgGreen, ip.address, fgWhite)
-    tb.write(2, 5,  "Timezone    : ", ip.timezone)
+    tb.write(2, 5,  "Timezone    : ", ip.timezone, fmt" | Offset: {ip.offset}")
     tb.write(2, 6,  "Location    : ", addressStr)
     tb.write(2, 9,  "Provider    : ", ip.isp)
     tb.write(16, 10, fmt"[{ip.orgAs}]")
