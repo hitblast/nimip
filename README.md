@@ -43,10 +43,10 @@ $ nimble install nimip
 - ### macOS (using [Homebrew](https://brew.sh))
 
 ```bash
-# tapping the formula
+# Tapping the formula.
 $ brew tap hitblast/nimtap
 
-# installing it
+# Installing it.
 $ brew install nimip
 ```
 
