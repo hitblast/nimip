@@ -118,7 +118,7 @@ proc country*(self: IPRef): string =
     return self.retrieveData("country").getStr()
 
 proc countryCode*(self: IPRef): string =
-    ## The country code of the IP address.
+    ## The two-letter country code **(ISO 3166-1 alpha-2)** of the IP address.
     return self.retrieveData("countryCode").getStr()
 
 proc region*(self: IPRef): string =
@@ -138,16 +138,20 @@ proc zip*(self: IPRef): string =
     return self.retrieveData("zip").getStr()
 
 proc latitude*(self: IPRef): float =
-    ## The coordinates (latitude) of the IP address.
+    ## The coordinates **(latitude)** of the IP address.
     return self.retrieveData("lat").getFloat()
 
 proc longitude*(self: IPRef): float =
-    ## The coordinates (longitude) of the IP address.
+    ## The coordinates **(longitude)** of the IP address.
     return self.retrieveData("lon").getFloat()
 
 proc timezone*(self: IPRef): string =
     ## The timezone of the area in which the IP address is located.
     return self.retrieveData("timezone").getStr()
+
+proc offset*(self: IPRef): int =
+    ## Timezone UTC DST offset in seconds.
+    return self.retrieveData("offset").getInt()
 
 proc isp*(self: IPRef): string =
     ## The Internet Service Provider (ISP) of the IP address.
@@ -161,3 +165,8 @@ proc orgAs*(self: IPRef): string =
     ## The AS number and organization related to the IP address.
     ## Empty for IP blocks not being announced in BGP tables.
     return self.retrieveData("as").getStr()
+
+proc asName*(self: IPRef): string =
+    ## The AS name **(RIR)** of the IP address. 
+    ## Empty for IP blocks not being announced in BGP tables.
+    return self.retrieveData("asname").getStr()
