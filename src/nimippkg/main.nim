@@ -30,6 +30,7 @@ import std/[
     httpclient,
     json,
     options,
+    strutils,
     strformat,
 ]
 
@@ -42,6 +43,7 @@ type
 
         address*: string
         locale*: Locale
+        remaining_requests*: int
         resp: Option[JsonNode]
 
     Locale* {.pure.} = enum
@@ -73,6 +75,7 @@ proc refreshData*(self: IPRef): Future[void] {.async.} =
 
     # Declaring a mutable, empty JsonNode instance for storing the response.
     var resp: JsonNode
+    var data: AsyncResponse
 
     # Constants related to the HTTP client and the locale for the query.
     let
@@ -81,10 +84,12 @@ proc refreshData*(self: IPRef): Future[void] {.async.} =
 
     # A try-except block has been used to ensure stable internet connection before execution.
     try:
-        resp = parseJson(await client.getContent(
-                fmt"http://ip-api.com/json/{self.address}?lang={locale}?fields=status,message,country,countryCode,region,regionName,city,zip,lat,lon,timezone,offset,isp,org,as,asname,query"))
+        data = await client.get(fmt"http://ip-api.com/json/{self.address}?lang={locale}?fields=status,message,country,countryCode,region,regionName,city,zip,lat,lon,timezone,offset,isp,org,as,asname,query")
     except OSError:
         raise IPResponseError.newException("A stable internet connection is required for IP lookups.")
+
+    # Parse response to a separate variable.
+    resp = parseJson(await data.body)
 
     # This if-else block checks if the requested IP address returns a failed query.
     if resp["status"].getStr() == "fail":
@@ -96,6 +101,7 @@ proc refreshData*(self: IPRef): Future[void] {.async.} =
 
     else:
         self.resp = some(resp)
+        self.remaining_requests = parseInt(toString(data.headers["X-Rl"]))
 
 
 proc retrieveData(self: IPRef, key: string): JsonNode =
