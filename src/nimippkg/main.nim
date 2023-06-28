@@ -1,27 +1,4 @@
-#[
-    MIT License
-
-    Copyright (c) 2023 HitBlast
-
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files (the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions:
-
-    The above copyright notice and this permission notice shall be included in all
-    copies or substantial portions of the Software.
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    SOFTWARE.
-]#
-
+# SPDX-License-Identifier: MIT
 
 
 # Imports.
@@ -35,6 +12,12 @@ import std/[
 ]
 
 
+# Global variables (to not be exported).
+var 
+    response: AsyncResponse
+    data: Option[JsonNode]
+
+
 # Different type declarations related to exceptions and reference objects.
 type
     IPRef* = ref object
@@ -43,8 +26,8 @@ type
 
         address*: string
         locale*: Locale
-        remaining_requests*: int
-        resp: Option[JsonNode]
+        timeUntilReset*: int
+        remainingRequests*: int
 
     Locale* {.pure.} = enum
         ## An enum representing different types of locales.
@@ -73,10 +56,6 @@ type
 proc refreshData*(self: IPRef): Future[void] {.async.} =
     ## Query the API for the provided IP and load the returned data to the `IPRef` instance if successful.
 
-    # Declaring a mutable, empty JsonNode instance for storing the response.
-    var resp: JsonNode
-    var data: AsyncResponse
-
     # Constants related to the HTTP client and the locale for the query.
     let
         client = newAsyncHttpClient()
@@ -84,33 +63,34 @@ proc refreshData*(self: IPRef): Future[void] {.async.} =
 
     # A try-except block has been used to ensure stable internet connection before execution.
     try:
-        data = await client.get(fmt"http://ip-api.com/json/{self.address}?lang={locale}?fields=status,message,country,countryCode,region,regionName,city,zip,lat,lon,timezone,offset,isp,org,as,asname,query")
+        response = await client.get(fmt"http://ip-api.com/json/{self.address}?lang={locale}?fields=status,message,country,countryCode,region,regionName,city,zip,lat,lon,timezone,offset,isp,org,as,asname,query")
     except OSError:
         raise IPResponseError.newException("A stable internet connection is required for IP lookups.")
 
     # Parse response to a separate variable.
-    resp = parseJson(await data.body)
+    let parsed = parseJson(await response.body)
 
     # This if-else block checks if the requested IP address returns a failed query.
-    if resp["status"].getStr() == "fail":
+    if parsed["status"].getStr() == "fail":
         let
-            message = resp["message"].getStr()
-            query = resp["query"].getStr()
+            message = parsed["message"].getStr()
+            query = parsed["query"].getStr()
 
         raise IPDefect.newException(fmt"Query failed for IP {query}: '{message}'")
 
     else:
-        self.resp = some(resp)
-        self.remaining_requests = parseInt(toString(data.headers["X-Rl"]))
+        data = some(parsed)
+        self.remainingRequests = parseInt(toString(response.headers["X-Rl"]))
+        self.timeUntilReset = parseInt(toString(response.headers["X-Ttl"]))
 
 
 proc retrieveData(self: IPRef, key: string): JsonNode =
     ## Returns the value of a provided key within the initialized data. Returned in JsonNode.
 
-    if not self.resp.isSome:
+    if not data.isSome:
         raise NotInitializedError.newException("Initialize the IP information with IPRef.refreshData() first.")
     else:
-        return self.resp.get(){key}
+        return data.get(){key}
 
 
 #[
