@@ -1,3 +1,5 @@
+<!-- SPDX-License-Identifier: MIT -->
+
 <div align="center">
 
 # <img src="https://raw.githubusercontent.com/nim-lang/assets/master/Art/logo-crown.png" height="30px"/> nimip <br>
