@@ -25,4 +25,4 @@ when defined(nimdistros):
 
 # Some tasks to make building easier.
 task release, "Builds a production executable for the package":
-  exec "nimble build -d:ssl -d:release --accept"
+  exec "nimble build -d:ssl -d:release --hints:off --accept"
