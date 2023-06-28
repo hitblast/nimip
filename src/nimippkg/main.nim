@@ -13,7 +13,7 @@ import std/[
 
 
 # Global variables (to not be exported).
-var 
+var
     response: AsyncResponse
     data: Option[JsonNode]
 
