@@ -8,7 +8,7 @@ import std/[
     json,
     options,
     strutils,
-    strformat,
+    strformat
 ]
 
 
