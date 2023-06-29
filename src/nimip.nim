@@ -67,8 +67,7 @@ proc run*(): Future[void] {.async.} =
 
     # The top panel for the terminal.
     tb.setForegroundColor(fgWhite, true)
-    tb.write(2, 1, "[ Press ", fgYellow, "esc", fgWhite, "/", fgYellow, "q",
-            fgWhite, " to quit. ]")
+    tb.write(2, 1, "[ Press ", fgYellow, "esc", fgWhite, "/", fgYellow, "q", fgWhite, " to quit. ]")
     tb.drawRect(0, 0, primaryLength, 7)
     tb.drawHorizLine(2, primaryLength - 2, 2, doubleStyle = true)
 
@@ -88,7 +87,7 @@ proc run*(): Future[void] {.async.} =
 
     tb.drawHorizLine(1, primaryLength - 2, 17)
     tb.write(primaryLength, 13, fgGreen, fmt"{ip.remainingRequests}", fgWhite, " remaining requests")
-    tb.write(primaryLength, 17, fgGreen, fmt"{ip.timeUntilReset}s", fgWhite, " until cache reset")
+    tb.write(primaryLength, 17, fgGreen, fmt"{ip.timeUntilReset}s", fgWhite, " until limit reset")
 
 
     # Finally, display the entire thing.
