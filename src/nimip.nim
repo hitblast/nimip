@@ -87,8 +87,8 @@ proc run*(): Future[void] {.async.} =
     tb.write(4, 16, "Longitude   : ", fgCyan, fmt"{ip.longitude}", fgWhite)
 
     tb.drawHorizLine(1, primaryLength - 2, 17)
-    tb.write(primaryLength, 13, fgGreen, fmt"{ip.remainingRequests}", fgWhite, " remaining requests.")
-    tb.write(primaryLength, 17, fgGreen, fmt"{ip.timeUntilReset}s", fgWhite, " until cache reset.")
+    tb.write(primaryLength, 13, fgGreen, fmt"{ip.remainingRequests}", fgWhite, " remaining requests")
+    tb.write(primaryLength, 17, fgGreen, fmt"{ip.timeUntilReset}s", fgWhite, " until cache reset")
 
 
     # Finally, display the entire thing.
