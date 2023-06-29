@@ -79,10 +79,12 @@ proc refreshData*(self: IPRef): Future[void] {.async.} =
         raise IPDefect.newException(fmt"Query failed for IP {query}: '{message}'")
 
     else:
-        data = some(parsed)
-        self.remainingRequests = parseInt(toString(response.headers["X-Rl"]))
-        self.timeUntilReset = parseInt(toString(response.headers["X-Ttl"]))
+        proc getParsedHeader(key: string): int =
+            return parseInt(toString(response.headers[key]))
 
+        data = some(parsed)
+        self.remainingRequests = getParsedHeader("X-Rl")
+        self.timeUntilReset = getParsedHeader("X-Ttl")
 
 proc retrieveData(self: IPRef, key: string): JsonNode =
     ## Returns the value of a provided key within the initialized data. Returned in JsonNode.
