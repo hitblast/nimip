@@ -12,7 +12,7 @@ bin           = @["nimip"]
 
 
 # Nim dependencies / required libraries.
-requires "nim >= 1.6"
+requires "nim >= 1.6.12"
 requires "argparse >= 4.0"
 requires "illwill >= 0.3"
 
