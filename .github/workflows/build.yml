@@ -48,7 +48,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Check package validity
-      run: nimble check
+      run: nimble check --accept
 
     - name: Build
       run: nimble build -d:ssl -d:release --accept
