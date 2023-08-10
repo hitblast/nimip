@@ -119,11 +119,9 @@ waitFor main()
 
 ## 🔨 Building
 
-The default build configuration (both for development and production) for this project is kept in the [nimip.nimble](https://github.com/hitblast/nimip/blob/main/nimip.nimble) file. You can easily build binaries using the following command:
-
 ```bash
-# Build using the built-in task.
-$ nimble release
+# Prepare a release build.
+$ nimble build -d:ssl -d:release --accept
 ```
 
 The various third-party libraries and dependancies used for developing this project are mentioned below:

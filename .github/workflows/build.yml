@@ -51,7 +51,7 @@ jobs:
       run: nimble check
 
     - name: Build
-      run: nimble release
+      run: nimble build -d:ssl -d:release --accept
 
     - name: Upload artifact
       uses: actions/upload-artifact@v3
