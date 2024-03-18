@@ -20,7 +20,7 @@ jobs:
     strategy:
       matrix:
         nimversion:
-          - binary:stable
+          - 1.6.10
 
         os: [ubuntu-latest, macos-latest, windows-latest]
         include:
