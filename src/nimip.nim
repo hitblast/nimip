@@ -80,7 +80,7 @@ proc run*(): Future[void] {.async.} =
 
     # Finally, display the entire thing.
     # This also includes checking for keypress events in order for the user to quit the interface.
-    # An exitProc() procedure has been defined to handle the cleanup and exit process.
+    # An exitProc() procedure has also been defined to handle the cleanup process.
     proc exitProc() {.noconv.} =
         illwillDeinit()
         showCursor()
@@ -91,12 +91,13 @@ proc run*(): Future[void] {.async.} =
     hideCursor()
 
     while true:
-        for key in getKeys():
-            case key
-            of Key.Escape, Key.Q: exitProc()
-            else: discard
-
         tb.display()
+
+        var key = getKey()
+        case key
+        of Key.Escape, Key.Q: exitProc()
+        else: discard
+
         sleep(20)
 
 
