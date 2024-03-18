@@ -127,8 +127,8 @@ $ nimble build -d:ssl -d:release --accept
 The various third-party libraries and dependancies used for developing this project are mentioned below:
 
 - Internal dependencies:
-    1. The [argparse (>= 4.0)](https://nimble.directory/pkg/argparse) library, for parsing command-line arguments for the CLI binary.
-    2. The [illwill (>= 0.3)](https://nimble.directory/pkg/illwill) library, for the terminal user interface (TUI).
+    1. The [argparse](https://nimble.directory/pkg/argparse) library, for parsing command-line arguments for the CLI binary.
+    2. The [illwill](https://nimble.directory/pkg/illwill) library, for the terminal user interface (TUI).
 
 - External dependencies (noted in the [root .nimble](https://github.com/hitblast/nimip/blob/main/nimip.nimble) file):
     1. [OpenSSL](https://www.openssl.org) for connection and making API calls.
