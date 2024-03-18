@@ -45,18 +45,6 @@ proc run*(): Future[void] {.async.} =
         echo "Couldn\'t query the given IP address."
         quit(1)
 
-
-    # Initialize an instance of illwave and run the TUI if the code above succeeds.
-    # This includes a cursor-less window, so an exit procedure is also required.
-    proc exitProc() {.noconv.} =
-        illwillDeinit()
-        showCursor()
-        quit(0)
-
-    illwillInit(fullscreen = true)
-    setControlCHook(exitProc)
-    hideCursor()
-
     # Declare the default terminal buffer to work with.
     var tb = newTerminalBuffer(terminalWidth(), terminalHeight())
 
@@ -92,14 +80,23 @@ proc run*(): Future[void] {.async.} =
 
     # Finally, display the entire thing.
     # This also includes checking for keypress events in order for the user to quit the interface.
+    # An exitProc() procedure has been defined to handle the cleanup and exit process.
+    proc exitProc() {.noconv.} =
+        illwillDeinit()
+        showCursor()
+        quit(0)
+
+    illwillInit(fullscreen=true)
+    setControlCHook(exitProc)
+    hideCursor()
+
     while true:
+        for key in getKeys():
+            case key
+            of Key.Escape, Key.Q: exitProc()
+            else: discard
+
         tb.display()
-
-        var key = getKey()
-        case key
-        of Key.Escape, Key.Q: exitProc()
-        else: discard
-
         sleep(20)
 
 
