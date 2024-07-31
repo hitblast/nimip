@@ -38,7 +38,7 @@ As a developer, I'm still learning the Nim programming language (pretty awesome!
 - ### Nim (using [nimble](https://github.com/nim-lang/nimble))
 
 ```bash
-# Requires Nim v1.6 or greater.
+# Requires Nim v2.0 or greater.
 $ nimble install nimip
 ```
 
@@ -48,7 +48,7 @@ $ nimble install nimip
 # Tapping the formula.
 $ brew tap hitblast/nimtap
 
-# Installing it.
+# Install using the `brew install` command.
 $ brew install nimip
 ```
 
@@ -90,7 +90,7 @@ import std/[
     asyncdispatch,
     strformat
 ]
-import nimippkg/main
+import nimip/main
 
 # Creating a new IP reference object.
 let ip = IPRef(
