@@ -8,7 +8,7 @@ import std/[
 ]
 import argparse, illwill
 
-import nimippkg/main
+import nimip/main
 
 
 # Primary run() procedure for the hybrid package.

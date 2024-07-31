@@ -2,7 +2,7 @@
 
 
 # The package itself.
-version       = "1.2.1"
+version       = "1.3"
 author        = "HitBlast"
 description   = "Asynchronously lookup IP addresses with this tiny, hybrid Nim application."
 license       = "MIT"
@@ -12,7 +12,7 @@ bin           = @["nimip"]
 
 
 # Nim dependencies / required libraries.
-requires "nim >= 1.6.10"
+requires "nim >= 2.0.0"
 requires "argparse >= 4.0"
 requires "illwill == 0.3.2"
 
