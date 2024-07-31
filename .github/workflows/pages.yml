@@ -41,14 +41,14 @@ jobs:
 
       - name: Build
         run: |
-          nimble doc2 src/nimippkg/main.nim --accept
-          cd src/nimippkg/htmldocs
+          nimble doc2 src/nimip/main.nim --accept
+          cd src/nimip/htmldocs
           mv main.html index.html
         
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: './src/nimippkg/htmldocs'
+          path: './src/nimip/htmldocs'
           
       - name: Deploy to GitHub Pages
         id: deployment
