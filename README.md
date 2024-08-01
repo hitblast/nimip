@@ -63,7 +63,7 @@ This project is written as a [hybrid package](https://github.com/nim-lang/nimble
 
 ### ... as a CLI application
 
-After installing the package [(see this section)](#-installation), the binary for nimip should be in your `PATH` variable depending on how you've installed it. This means, a new `mcsrvstat` command will be added to your shell environment.
+After installing the package [(see this section)](#-installation), the binary for nimip should be in your `PATH` variable depending on how you've installed it. This means, a new `nimip` command will be added to your shell environment.
 
 ```bash
 # Add binary to PATH.
