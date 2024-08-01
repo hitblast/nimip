@@ -38,8 +38,8 @@ jobs:
 
       - name: Build
         run: |
-          nimble doc2 src/nimip/base.nim --accept
-          cd src/nimip/htmldocs && mv base.html index.html
+          nimble doc2 src/nimip/main.nim --accept
+          cd src/nimip/htmldocs && mv main.html index.html
         
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
