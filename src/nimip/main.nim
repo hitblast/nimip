@@ -63,7 +63,7 @@ proc refreshData*(self: IPRef): Future[void] {.async.} =
 
     # A try-except block has been used to ensure stable internet connection before execution.
     try:
-        response = await client.get(fmt"http://ip-api.com/json/{self.address}?lang={locale}?fields=status,message,country,countryCode,region,regionName,city,zip,lat,lon,timezone,offset,isp,org,as,asname,query")
+        response = await client.get(fmt"http://ip-api.com/json/{self.address}?lang={locale}?fields=status,message,country,countryCode,region,regionName,city,zip,lat,lon,timezone,offset,isp,org,as,asname,query,continent,continentCode,district,currency,mobile,proxy,hosting")
     except OSError:
         raise IPResponseError.newException("A stable internet connection is required for IP lookups.")
 
@@ -158,3 +158,35 @@ proc asName*(self: IPRef): string =
     ## The AS name **(RIR)** of the IP address.
     ## Empty for IP blocks not being announced in BGP tables.
     return self.retrieveData("asname").getStr()
+
+proc query*(self: IPRef): string =
+    ## The queried IP address.
+    return self.retrieveData("query").getStr()
+
+proc continent*(self: IPRef): string =
+    ## The continent in which the IP address is located.
+    return self.retrieveData("continent").getStr()
+
+proc continentCode*(self: IPRef): string =
+    ## The two-letter continent code **(ISO 3166-1 alpha-2)** of the IP address.
+    return self.retrieveData("continentCode").getStr()
+
+proc district*(self: IPRef): string =
+    ## The district in which the IP address is located.
+    return self.retrieveData("district").getStr()
+
+proc currency*(self: IPRef): string =
+    ## The currency used in the area of the IP address.
+    return self.retrieveData("currency").getStr()
+
+proc mobile*(self: IPRef): bool =
+    ## Whether the IP address is a mobile connection.
+    return self.retrieveData("mobile").getBool()
+
+proc proxy*(self: IPRef): bool =
+    ## Whether the IP address is a proxy.
+    return self.retrieveData("proxy").getBool()
+
+proc hosting*(self: IPRef): bool =
+    ## Whether the IP address is a hosting provider.
+    return self.retrieveData("hosting").getBool()
