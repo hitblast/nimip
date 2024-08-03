@@ -64,19 +64,18 @@ proc run*(): Future[void] {.async.} =
     tb.write(4, 5, "Timezone    : ", ip.timezone, fmt" | Offset: {ip.offset}")
     tb.write(4, 6, "Location    : ", addressStr)
 
-    tb.drawVertLine(0, 17, 1, doubleStyle = true)
+    tb.drawVertLine(0, 21, 1, doubleStyle = true)
     tb.write(4, 9, "Provider    : ", ip.isp)
     tb.write(18, 10, fmt"[{ip.orgAs}]")
     tb.write(4, 12, "Zip Code    : ", ip.zip)
-
     tb.drawHorizLine(1, primaryLength - 2, 13)
+    
     tb.write(4, 15, "Latitude    : ", fgCyan, fmt"{ip.latitude}", fgWhite)
     tb.write(4, 16, "Longitude   : ", fgCyan, fmt"{ip.longitude}", fgWhite)
-
-    tb.drawHorizLine(1, primaryLength - 2, 17)
-    tb.write(primaryLength, 13, fgGreen, fmt"{ip.remainingRequests}", fgWhite, " remaining requests")
-    tb.write(primaryLength, 17, fgGreen, fmt"{ip.timeUntilReset}s", fgWhite, " until limit reset")
-
+    tb.write(4, 18, "Mobile      : ", if ip.mobile: fgGreen else: fgRed, fmt"{ip.mobile}", fgWhite)
+    tb.write(4, 19, "Proxy       : ", if ip.proxy: fgGreen else: fgRed, fmt"{ip.proxy}", fgWhite)
+    tb.write(4, 20, "Hosting     : ", if ip.hosting: fgGreen else: fgRed, fmt"{ip.hosting}", fgWhite)
+    tb.drawHorizLine(1, primaryLength - 2, 21)
 
     # Finally, display the entire thing.
     # This also includes checking for keypress events in order for the user to quit the interface.
