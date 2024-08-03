@@ -10,7 +10,9 @@
 [![Deploy to Pages](https://github.com/hitblast/nimip/actions/workflows/pages.yml/badge.svg)](https://github.com/hitblast/nimip/actions/workflows/pages.yml)
 
 <img src="https://github.com/hitblast/nimip/blob/main/static/demo.png" alt="Demo Terminal Image">
-<h6><i>(the colors and text may vary depending on your terminal emulator)</i></h6>
+
+<i>(the colors and text may vary depending on your terminal emulator)</i>
+<br>
 
 </div>
 
