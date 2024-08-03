@@ -11,9 +11,6 @@
 
 <img src="https://github.com/hitblast/nimip/blob/main/static/demo.png" alt="Demo Terminal Image">
 
-<i>(the colors and text may vary depending on your terminal emulator)</i>
-<br>
-
 </div>
 
 ## Table of Contents
