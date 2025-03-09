@@ -46,7 +46,7 @@ $ nimble install nimip
 
 ```bash
 # Tapping the formula.
-$ brew tap hitblast/nimtap
+$ brew tap hitblast/tap
 
 # Install using the `brew install` command.
 $ brew install nimip
