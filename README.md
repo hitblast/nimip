@@ -14,7 +14,7 @@
 </div>
 
 > [!WARNING]
-> This project is not going to receive any major future updates. Feel free to still make contributions as pull requests are welcome.
+> This project has gone on maintenance mode as of May 2025.
 
 ## Table of Contents
 
