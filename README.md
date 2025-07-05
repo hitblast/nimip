@@ -2,7 +2,7 @@
 
 <div align="center">
 
-# <img src="https://raw.githubusercontent.com/nim-lang/assets/master/Art/logo-crown.png" height="30px"/> nimip <br>
+# <img src="https://raw.githubusercontent.com/nim-lang/assets/master/Art/logo-crown.png" width="30px"> nimip <br>
 
 ### Asynchronously lookup IP addresses with this tiny, hybrid Nim application.
 
