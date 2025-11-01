@@ -54,7 +54,7 @@ jobs:
       run: nimble build -d:ssl -d:release --accept
 
     - name: Upload artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: ${{ matrix.artifact }}
         path: ${{ matrix.file }}
@@ -76,7 +76,7 @@ jobs:
           args: unzip -qq dlls.zip
 
       - name: Upload DLLs artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: dlls
           path: |
@@ -112,7 +112,7 @@ jobs:
         args: zip -qq -r package-win-x64.zip .
 
     - name: Upload artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: package-win-x64
         path: package-win-x64.zip
