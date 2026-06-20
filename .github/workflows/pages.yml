@@ -42,7 +42,7 @@ jobs:
           cd src/nimip/htmldocs && mv main.html index.html
         
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v5
         with:
           path: './src/nimip/htmldocs'
           
